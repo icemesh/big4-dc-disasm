@@ -57,7 +57,7 @@ int main(int argc, const char* aArgv[])
 	else
 	{
 		//print usage
-		puts("Usage: .\\big4-dc-disasm ss-xxxxx.bin");
+		printf("Usage: .\%s ss-xxxxx.bin\n", aArgv[0]);
 		return 0;
 	}
 }
