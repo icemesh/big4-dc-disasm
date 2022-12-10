@@ -24,6 +24,7 @@
     <ProjectGuid>{a31aca04-1b8b-4fe1-ab2a-24aa66e1479f}</ProjectGuid>
     <RootNamespace>big4dcdisasm</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>big4-dc-disasm</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
