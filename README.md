@@ -9,7 +9,7 @@ To decompile a script first find a script file that starts with `ss-\<name>.bin`
 Open the terminal and run the following command:
 
 ```
-.\big4-dc-disasm .\ss-block-isl-spires-combat.bin
+.\big4-dc-disasm .\ss-block-isl-spires-combat.bin > .\ss-block-isl-spires-combat.txt
 ```
 
-The program will print on the terminal the script disassembled.
+This will redirect the output of the program to the file ss-block-isl-spires-combat.txt
