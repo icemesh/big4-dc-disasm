@@ -198,14 +198,14 @@ void Module::DumpEntry(Entry* pEntry)
 		case 0xC7CB275C: //SID("int32")
 		{
 			int32_t* pVal = reinterpret_cast<int32_t*>(pEntry->m_entryPtr);
-			printf("\tint32 '%s = %d\n", StringIdToStringInternal(pEntry->m_scriptId), *pVal);
+			printf("    int32 '%s = %d\n", StringIdToStringInternal(pEntry->m_scriptId), *pVal);
 			break;
 		}
 
 		case 0xC4AB6121: //SID("symbol")
 		{
 			StringId* pVal = reinterpret_cast<StringId*>(pEntry->m_entryPtr);
-			printf("\tsymbol '%s = '%s\n", StringIdToStringInternal(pEntry->m_scriptId), StringIdToStringInternal(*pVal) );
+			printf("    symbol '%s = '%s\n", StringIdToStringInternal(pEntry->m_scriptId), StringIdToStringInternal(*pVal) );
 			break;
 		}
 
@@ -237,7 +237,7 @@ void Module::DumpEntry(Entry* pEntry)
 			IdGroupEntry* pEntry = pGroup->m_pEntries;
 			for (int64_t iEntries = 0; iEntries < numEntries; iEntries++)
 			{
-				printf("\t:name '%s\n", StringIdToStringInternal(pEntry->m_id));
+				printf("    :name '%s\n", StringIdToStringInternal(pEntry->m_id));
 				pEntry++;
 			}
 			puts(")");
@@ -246,7 +246,12 @@ void Module::DumpEntry(Entry* pEntry)
 
 		default:
 		{
-			printf("Unk case:\n\tEntryId: %s\n\ttype:  %s(0x%08X)\n", StringIdToStringInternal(pEntry->m_scriptId), StringIdToStringInternal(scriptType), scriptType);
+			printf( "Unk case:\n"
+				"EntryId: %s\n"
+				"    type:  %s(0x%08X)\n",
+				StringIdToStringInternal(pEntry->m_scriptId),
+				StringIdToStringInternal(scriptType),
+				scriptType);
 			break;
 		}
 	}
