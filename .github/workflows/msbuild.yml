@@ -1,6 +1,6 @@
 name: MSBuild
 
-on: push
+on: [ push, pull_request ]
 env:
   SOLUTION_FILE_PATH: .
   BUILD_CONFIGURATION: Release
@@ -20,11 +20,16 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1.3
 
     - name: Build
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
+      run: |
+        msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
+        $cmdOutput = Split-Path -Path $pwd -Leaf
+        echo "PROJECT_NAME=$cmdOutput" >> $Env:GITHUB_ENV
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
+        name: ${{ env.PROJECT_NAME }}
         path: |
           x64/**/*.exe
           x64/**/*.pdb
+        if-no-files-found: error

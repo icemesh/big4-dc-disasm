@@ -12,6 +12,7 @@
 #include "../ss-debug/render-settings/render-settings-debug.h"
 #include "../script/script-manager-eval.h"
 #include "../dc/id-group/id-group.h"
+#include "../sidbase/stringid.h"
 #include "../sidbase/sidbase.h"
 
 #include <stdio.h>
@@ -190,39 +191,39 @@ void Module::DumpEntry(Entry* pEntry)
 	StringId scriptType = pEntry->m_typeId;
 	switch (scriptType)
 	{
-		case 0x45C51F9F:
+		case SID("state-script"):
 		{
 			DumpScript(reinterpret_cast<StateScript*>(pEntry->m_entryPtr));
 			break;
 		}
 
-		case 0xC7CB275C: //SID("int32")
+		case SID("int32"):
 		{
 			int32_t* pVal = reinterpret_cast<int32_t*>(pEntry->m_entryPtr);
 			printf("    int32 '%s = %d\n", StringIdToStringInternal(pEntry->m_scriptId), *pVal);
 			break;
 		}
 
-		case 0xC4AB6121: //SID("symbol")
+		case SID("symbol"):
 		{
 			StringId* pVal = reinterpret_cast<StringId*>(pEntry->m_entryPtr);
 			printf("    symbol '%s = '%s\n", StringIdToStringInternal(pEntry->m_scriptId), StringIdToStringInternal(*pVal) );
 			break;
 		}
 
-		case 0x98D57064: //SID("level-set")
+		case SID("level-set"):
 		{
 			PrintLevelSet(reinterpret_cast<LevelSet*>(pEntry->m_entryPtr));
 			break;
 		}
 
-		case 0x0BE3B01C:
+		case SID("render-settings-map"):
 		{
 			PrintRenderSettings(reinterpret_cast<RenderSettingsMap*>(pEntry->m_entryPtr));
 			break;
 		}
 
-		case 0x9ED499E1: //SID("script-lambda")
+		case SID("script-lambda"):
 		{
 			printf("(defun '%s\n", StringIdToStringInternal(pEntry->m_scriptId));
 			ExecuteScriptCode(reinterpret_cast<ScriptLambda*>(pEntry->m_entryPtr));
@@ -230,7 +231,7 @@ void Module::DumpEntry(Entry* pEntry)
 			break;
 		}
 
-		case 0x0372CF7E: //SID("id-group")
+		case SID("id-group"):
 		{
 			printf("(define-id-group '%s\n", StringIdToStringInternal(pEntry->m_scriptId));
 			IdGroup* pGroup = reinterpret_cast<IdGroup*>(pEntry->m_entryPtr);
