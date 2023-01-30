@@ -20,6 +20,8 @@
 #include <cinttypes>
 #include <stdlib.h>
 
+extern uintptr_t g_moduleBase;
+
 Module::Module() : m_pLoadedFile(nullptr) {}
 
 Module::Module(const char* filename)
@@ -199,15 +201,25 @@ void Module::DumpEntry(Entry* pEntry)
 
 		case SID("int32"):
 		{
-			int32_t* pVal = reinterpret_cast<int32_t*>(pEntry->m_entryPtr);
-			printf("    int32 '%s = %d\n", StringIdToStringInternal(pEntry->m_scriptId), *pVal);
+			printf("    int32 '%s = %d\n", StringIdToStringInternal(pEntry->m_scriptId), *reinterpret_cast<int32_t*>(pEntry->m_entryPtr));
 			break;
 		}
 
 		case SID("symbol"):
 		{
-			StringId* pVal = reinterpret_cast<StringId*>(pEntry->m_entryPtr);
-			printf("    symbol '%s = '%s\n", StringIdToStringInternal(pEntry->m_scriptId), StringIdToStringInternal(*pVal) );
+			printf("    symbol '%s = '%s\n", StringIdToStringInternal(pEntry->m_scriptId), StringIdToStringInternal(*reinterpret_cast<StringId*>(pEntry->m_entryPtr)));	
+			break;
+		}
+
+		case SID("float"):
+		{
+			printf("    float '%s = '%f\n", StringIdToStringInternal(pEntry->m_scriptId), *reinterpret_cast<float*>(pEntry->m_entryPtr));
+			break;
+		}
+
+		case SID("boolean"):
+		{
+			printf("    boolean '%s = '%s\n", StringIdToStringInternal(pEntry->m_scriptId), *reinterpret_cast<bool*>(pEntry->m_entryPtr) == 1 ? "#t" : "#f");
 			break;
 		}
 
@@ -248,12 +260,7 @@ void Module::DumpEntry(Entry* pEntry)
 
 		default:
 		{
-			printf( "Unk case:\n"
-				"EntryId: %s\n"
-				"    type:  %s(0x%08X)\n",
-				StringIdToStringInternal(pEntry->m_scriptId),
-				StringIdToStringInternal(scriptType),
-				scriptType);
+			printf("Unhandled case @ 0x%016llX\n    '%s '%s = ???\n", (reinterpret_cast<uintptr_t>(pEntry) - g_moduleBase), StringIdToStringInternal(scriptType), StringIdToStringInternal(pEntry->m_scriptId));
 			break;
 		}
 	}
