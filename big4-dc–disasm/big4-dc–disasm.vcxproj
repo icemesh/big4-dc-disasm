@@ -109,6 +109,7 @@
     <ClInclude Include="src\dc\dc.h" />
     <ClInclude Include="src\dc\id-group\id-group.h" />
     <ClInclude Include="src\dc\level-set\level-set.h" />
+    <ClInclude Include="src\dc\model-viewer\model-viewer.h" />
     <ClInclude Include="src\dc\render-settings\render-settings.h" />
     <ClInclude Include="src\dc\state-script\state-script.h" />
     <ClInclude Include="src\script\script-manager-eval.h" />
